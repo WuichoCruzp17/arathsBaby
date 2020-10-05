@@ -1,0 +1,216 @@
+   <link rel="stylesheet" href="../css/groupbox.css">
+   <link rel="stylesheet" href="../fontawesome-free-5.12.1-web/css/all.css">
+   <script src="../js/util.js"></script>
+   <script src="../js/sweetalert2@9.js"></script>
+   <script src="../arathsBaby/js/properties.js"></script>
+   <script src="../arathsBaby/js/proveedor.js"></script>
+ </head>  
+ <div class="container-fluid">
+
+      <div class="row mtop-10">
+           <div class="col-sm-12">
+                <fieldset class="well">
+                    <legend class="well-legend text-uppercase">{{proveedor.LEGEND}}:</legend>
+                     <form id={{proveedor.FRM_NAME_ID}}>
+                         <div class="row">
+                             <input type="text" 
+                                style="display: none;"
+                                class="form-control material-control" 
+                                id={{proveedor.FRM_ID}} 
+                                name={{proveedor.FRM_ID}} 
+                                v-model={{proveedor.FRM_ID}} 
+                            >
+                         </div>
+                        <div class="col-sm-4">
+                             <div class="form-group">
+                                    <label for="{{proveedor.FRM_NAME}}">{{proveedor.KEY_NAME}}</label>
+                             
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{proveedor.FRM_NAME}} 
+                                        name={{proveedor.FRM_NAME}} 
+                                        v-model={{proveedor.FRM_NAME}} 
+                                        maxlength="50" minlength="20" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{proveedor.msg_name}}" 
+                                        data-original-name="KEY_NAME"
+                                        required
+                                        >
+                            </div> 
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                    <label for="{{proveedor.FRM_RFC}}">{{proveedor.KEY_RFC}}</label>
+                             
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{proveedor.FRM_RFC}} 
+                                        name={{proveedor.FRM_RFC}} 
+                                        v-model={{proveedor.FRM_RFC}} 
+                                        maxlength="16" minlength="10" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{proveedor.msg_name}}" 
+                                        data-original-name="KEY_RFC"
+                                        required
+                                        >
+                            </div> 
+                        </div> 
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                    <label for="{{proveedor.FRM_RZS}}">{{proveedor.KEY_RZS}}</label>
+                             
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{proveedor.FRM_RZS}} 
+                                        name={{proveedor.FRM_RZS}} 
+                                        v-model={{proveedor.FRM_RZS}} 
+                                        maxlength="100" minlength="30" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{proveedor.msg_name}}" 
+                                        data-original-name="KEY_RZS"
+                                        required
+                                        >
+                            </div> 
+                        </div>  
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                    <label for="{{proveedor.FRM_TELE}}">{{proveedor.KEY_TELE}}</label>
+                             
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{proveedor.FRM_TELE}} 
+                                        name={{proveedor.FRM_TELE}} 
+                                        v-model={{proveedor.FRM_TELE}} 
+                                        maxlength="15" minlength="10" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{proveedor.msg_name}}" 
+                                        data-original-name="KEY_TELE"
+                                        required
+                                        >
+                            </div> 
+                        </div> 
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                    <label for="{{proveedor.FRM_EMAIL}}">{{proveedor.KEY_EMAIL}}</label>
+                             
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{proveedor.FRM_EMAIL}} 
+                                        name={{proveedor.FRM_EMAIL}} 
+                                        v-model={{proveedor.FRM_EMAIL}} 
+                                        maxlength="100" minlength="5" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{proveedor.msg_name}}" 
+                                        data-original-name="KEY_EMAIL"
+                                        required
+                                        >
+                            </div> 
+                        </div> 
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                    <label for="{{proveedor.FRM_PHONE}}">{{proveedor.KEY_PHONE}}</label>
+                             
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{proveedor.FRM_PHONE}} 
+                                        name={{proveedor.FRM_PHONE}} 
+                                        v-model={{proveedor.FRM_PHONE}} 
+                                        maxlength="10" minlength="10" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{proveedor.msg_name}}" 
+                                        data-original-name="KEY_PHONE"
+                                        required
+                                        >
+                            </div> 
+                        </div> 
+                        <div class="col-sm-12">
+                            <p class="text-center">
+                                <button type="button" class="btn btn-success mtop-10" value="{{proveedor.FRM_NAME_ID}}" v-on:click="validateSupplier">{{global.KEY_SAVE}}</button>
+                                <button type="button" class="btn btn-default mtop-10" v-on:click="limpiar">{{global.KEY_CLEAN}}</button>
+                            </p>
+                    </div>
+                   </form>
+                </fieldset>
+           </div>
+      </div>
+
+ </div>
+<div class="container-fluid">
+     <div class="row mtop-10">
+         <div class="col-sm-12">
+           <fieldset class="well" id="demo">
+               <legend class="well-legend text-uppercase">Lista de Proveedores:</legend>
+               <div class="">
+                 <div class="col-lg-4">
+                   <div class="group-material">
+                    <form id="search" style="margin-bottom:5px">
+                        Buscar <input name="query" v-model="searchQuery" class="form-control">
+                    </form>
+                  </div>
+                 </div>
+               </div>
+               <demo-grid :heroes="gridData" :columns="gridColumns" :filter-key="searchQuery">
+               </demo-grid>
+           </fieldset>
+          </div>
+      </div>
+
+    </div>
+
+
+
+ <script type="text/x-template" id="grid-template">
+    <div class="container-fluid">
+          <table class="table">
+            <thead>
+              <tr>
+                <th v-for="key in columns"
+                  @click="sortBy(key)" 
+                  
+                  \:class="{ active: sortKey == key.column }">
+                  
+                  <template v-if="key.column !==''">
+                    \{{ key.name | capitalize }}
+                  <span class="arrow" :class="sortOrders[key.column] > 0 ? 'asc' : 'dsc'" >
+                  </span>
+                  </template>
+                 
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="entry in filteredHeroes">
+                <td>\{{entry['nombre']}}</td>
+                <td>
+                    \{{entry['rfc']}}
+                </td>
+                <td>
+                   <p v-if='entry["correo"]!=="" && entry["correo"]!==null'>
+                     <span class="fa fa-envelope-square"></span> \{{entry['correo']}}
+                   </p>
+                   <p v-else><span class="fa fa-envelope-square"></span> Sin Correo </p>
+                   <p v-if='entry["celular"]!=="" && entry["celular"]!==null'>
+                     <span class="fa fa-phone"></span> \{{entry['celular']}}
+                   </p>
+                  <p v-else><span class="fa fa-phone"></span> Sin Telefono</p>
+                   <p v-if='entry["telefono"]!=="" && entry["telefono"] !== null'>
+                     <span class="fa fa-mobile-alt"></span> \{{entry['telefono']}}
+                   </p>
+                  <p v-else><span class="fa fa-mobile-alt"></span> Sin Celular</p>
+                </td>
+                <td>
+                    <button type='button' class="btn btn-primary"  v-on:click='findById(entry["proveedorId"])' >
+                      <span class="fa fa-pencil-alt"></span>
+                    </button>
+                    <button v-if='entry["estatusId"]==1' type='button' class="btn btn-default"  v-on:click='changeStatus(entry["proveedorId"])' >
+                      <span class="fa fa-eye"></span>
+                    </button>
+                    <button v-else type='button' class="btn btn-default"  v-on:click='changeStatus(entry["proveedorId"])' >
+                      <span class="fa fa-eye-slash"></span>
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </script>
