@@ -1,0 +1,136 @@
+ <head>  
+   <link rel="stylesheet" href="../css/groupbox.css">
+   <link rel="stylesheet" href="../fontawesome-free-5.12.1-web/css/all.css">
+   <script src="../js/util.js"></script>
+   <script src="../js/sweetalert2@9.js"></script>
+   <script src="../arathsBaby/js/properties.js"></script>
+   <script src="../arathsBaby/js/categoria.js"></script>
+ </head>  
+
+
+  <div class="container-fluid">
+
+      <div class="row mtop-10">
+           <div class="col-sm-12">
+                <fieldset class="well">
+                    <legend class="well-legend text-uppercase">{{categoria.LEGEND}}:</legend>
+                     <form id={{categoria.FRM_NAME_ID}}>
+                         <div class="row">
+                             <input type="text" 
+                                style="display: none;"
+                                class="form-control material-control" 
+                                id={{categoria.FRM_ID}} 
+                                name={{categoria.FRM_ID}} 
+                                v-model={{categoria.FRM_ID}} 
+                            >
+                         </div>
+                        <div class="col-sm-4">
+                             <div class="form-group">
+                                    <label for="{{categoria.FRM_NAME}}">{{categoria.KEY_NAME}}</label>
+                             
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{categoria.FRM_NAME}} 
+                                        name={{categoria.FRM_NAME}} 
+                                        v-model={{categoria.FRM_NAME}} 
+                                        maxlength="50" minlength="20" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{categoria.msg_name}}" 
+                                        data-original-name="KEY_NAME"
+                                        required
+                                        >
+                            </div> 
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                    <label for="{{categoria.FRM_DESC}}">{{categoria.KEY__DESC}}</label>
+                             
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{categoria.FRM_DESC}} 
+                                        name={{categoria.FRM_DESC}} 
+                                        v-model={{categoria.FRM_DESC}} 
+                                        maxlength="5" minlength="100" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{categoria.msg_name}}" 
+                                        data-original-name="KEY__DESC"
+                                        >
+                            </div> 
+                        </div> 
+                        <div class="col-sm-12">
+                            <p class="text-center">
+                                <button type="button" class="btn btn-success mtop-10" value="{{proveedor.FRM_NAME_ID}}" v-on:click="validateSupplier">{{global.KEY_SAVE}}</button>
+                                <button type="button" class="btn btn-default mtop-10" v-on:click="limpiar">{{global.KEY_CLEAN}}</button>
+                            </p>
+                    </div>
+                   </form>
+                </fieldset>
+           </div>
+      </div>
+
+ </div>
+<div class="container-fluid">
+     <div class="row mtop-10">
+         <div class="col-sm-12">
+           <fieldset class="well" id="demo">
+               <legend class="well-legend text-uppercase">{{categoria.LEGEND_TABLE}}</legend>
+               <div class="">
+                 <div class="col-lg-4">
+                   <div class="group-material">
+                    <form id="search" style="margin-bottom:5px">
+                        Buscar <input name="query" v-model="searchQuery" class="form-control">
+                    </form>
+                  </div>
+                 </div>
+               </div>
+               <demo-grid :heroes="gridData" :columns="gridColumns" :filter-key="searchQuery">
+               </demo-grid>
+           </fieldset>
+          </div>
+      </div>
+
+    </div>
+
+
+
+ <script type="text/x-template" id="grid-template">
+    <div class="container-fluid">
+          <table class="table">
+            <thead>
+              <tr>
+                <th v-for="key in columns"
+                  @click="sortBy(key)" 
+                  
+                  \:class="{ active: sortKey == key.column }">
+                  
+                  <template v-if="key.column !==''">
+                    \{{ key.name | capitalize }}
+                  <span class="arrow" :class="sortOrders[key.column] > 0 ? 'asc' : 'dsc'" >
+                  </span>
+                  </template>
+                 
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="entry in filteredHeroes">
+                <td>\{{entry['nombre']}}</td>
+                <td>
+                    \{{entry['descripcion']}}
+                </td>
+                <td>
+                    <button type='button' class="btn btn-primary"  v-on:click='findById(entry["categoriaId"])' >
+                      <span class="fa fa-pencil-alt"></span>
+                    </button>
+                    <button v-if='entry["estatusId"]==1' type='button' class="btn btn-default"  v-on:click='changeStatus(entry["categoriaId"])' >
+                      <span class="fa fa-eye"></span>
+                    </button>
+                    <button v-else type='button' class="btn btn-default"  v-on:click='changeStatus(entry["categoriaId"])' >
+                      <span class="fa fa-eye-slash"></span>
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </script>

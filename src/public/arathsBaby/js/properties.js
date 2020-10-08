@@ -19,6 +19,18 @@ const proveedor={
     msg_name:'Nombre es requerido'
 };  
 
+const categoria ={
+    FRM_NAME_ID:'frm_categoria',
+    FRM_ID:'categoriaId',
+    FRM_NAME:'nombre',
+    FRM_DESC:'descripcion',
+    LEGEND:'Categoria',
+    LEGEND_TABLE:'Lista de Categorías',
+    msg_name:'Es requerido',
+    KEY_NAME:'Nombre',
+    KEY__DESC:'Descripción'
+};
+
 const mesages={
     msg_lon_M:'El ${text} no debe de superar ${number} caracteres',
     msg_lon_m:'El ${text} debe de cumplir por lo menos ${number} caracteres'

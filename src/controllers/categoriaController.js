@@ -1,19 +1,20 @@
-const proveedorController = {};
-const {proveedor,mesages,global} = require('../propertis');
-const codeBss = require('../resources/codeBss');
+const categoriaController = {};
 const {utilService} = require('../lib/util');
-const modulo="/arathsBaby/proveedores";
-proveedorController.index =(req,res)=>{
-    console.log(req.user);
-    res.render('arathsBaby/proveedores',{proveedor,msg:mesages,global})
+const {categoria,mesages,global} = require('../propertis');
+const modulo="/arathsBaby/categorias";
+
+
+categoriaController.index = (req,res)=>{
+    res.render('arathsBaby/categorias',{categoria,mesages,global})
 };
 
-proveedorController.save =async (req,res)=>{
+
+categoriaController.save =async (req,res)=>{
     
     var path ="/save"
     req.body.usuarioCreacionId =  req.user.usuarioId;
     req.body.usuarioModificoId =  req.user.usuarioId;
-    req.body.proveedorId = null;
+    req.body.categoriaId = null;
     console.log(req.body);  
     const result= await utilService.POST(req.body,modulo,path);
     if(result != null){
@@ -23,7 +24,8 @@ proveedorController.save =async (req,res)=>{
     }
 };
 
-proveedorController.update = async(req,res)=>{
+
+categoriaController.update = async(req,res)=>{
     var path ="/update";
     req.body.usuarioModificoId =  req.user.usuarioId;
     const result = await utilService.POST(req.body,modulo,path);
@@ -34,7 +36,7 @@ proveedorController.update = async(req,res)=>{
     }
 };
 
-proveedorController.updateStatus =async (req,res)=>{
+categoriaController.updateStatus =async (req,res)=>{
     
     var path ="/updateStatus"
     req.body.usuarioModificoId =  req.user.usuarioId;
@@ -49,27 +51,29 @@ proveedorController.updateStatus =async (req,res)=>{
     }
 };
 
-proveedorController.findById = async (req,res)=>{
-    var path="/findById/"+req.params.id;
+
+categoriaController.findById = async (req,res)=>{
+    var path="/"+req.params.id;
     const result= await utilService.GET(modulo,path);         
     if(result != null){
-        const proveedor =  result.data.proveedor;
-        res.status(200).json({errorMessage:"",proveedor,successful:true});
+        const categoria =  result.data.categoria;
+        res.status(200).json({errorMessage:"",categoria,successful:true});
     }else{
-        res.status(200).json({errorMessage:'',proveedor:{}});
+        res.status(200).json({errorMessage:'',categoria:null});
     }
 };
 
-proveedorController.findAll = async (req,res)=>{
-    var path="/";
-    const result= await utilService.GET(modulo,path);         
-    if(result != null){
-        const proveedores =  result.data.proveedores;
-        res.status(200).json({errorMessage:"",proveedores,successful:true});
-    }else{
-        res.status(200).json({errorMessage:'',proveedores:[]});
-    }
-};
+categoriaController.findAll =async (req,res)=>{
+       
+    var path ="/ "
+     req.body.usuarioId =  req.user.usuarioId;
+     const result= await utilService.GET(modulo,path);
+        if(result){
+            res.status(200).json({errorMessage:'',categorias:result.data.categorias,successful:true});
+        }else{
+            console.log(result);
+            res.status(200).json({errorMessage:'Error en el servidor',categorias:null});
+        }
+};  
 
-
-module.exports = proveedorController;
+module.exports = categoriaController;

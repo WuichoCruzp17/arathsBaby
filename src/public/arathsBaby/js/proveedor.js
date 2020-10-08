@@ -52,7 +52,6 @@ proveedorJS.changeStatus = async function(proveedorId){
             model = modsJS.grid.gridData[i];
         }
     }
-    model[proveedor.FRM_ESTATUS] = (proveedor.FRM_ESTATUS) ? false:true;
     proveedorJS.updateStatus(model);
 };
 
