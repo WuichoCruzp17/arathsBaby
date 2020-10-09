@@ -61,13 +61,24 @@ proveedorController.findById = async (req,res)=>{
 };
 
 proveedorController.findAll = async (req,res)=>{
-    var path="/";
+    var path=(req!=undefined)?"/1":"/0";
     const result= await utilService.GET(modulo,path);         
     if(result != null){
         const proveedores =  result.data.proveedores;
-        res.status(200).json({errorMessage:"",proveedores,successful:true});
+        if(req !=undefined){
+
+            res.status(200).json({errorMessage:"",proveedores,successful:true});
+        }else{
+            return proveedores;
+        }
+        
     }else{
-        res.status(200).json({errorMessage:'',proveedores:[]});
+        if(req != undefined){
+            res.status(200).json({errorMessage:'',proveedores:[]});
+        }else{
+            return null;
+        }
+        
     }
 };
 

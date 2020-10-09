@@ -51,7 +51,7 @@ const utilService ={
         try{
              resuslt = await axios.get(constantes.uri+modulo+path);
         }catch(error){
-            console.log(error);
+            //console.log(error);
         }
         
         return resuslt;

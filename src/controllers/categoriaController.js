@@ -1,6 +1,7 @@
 const categoriaController = {};
 const {utilService} = require('../lib/util');
 const {categoria,mesages,global} = require('../propertis');
+const codeBss = require('../resources/codeBss');
 const modulo="/arathsBaby/categorias";
 
 
@@ -47,13 +48,13 @@ categoriaController.updateStatus =async (req,res)=>{
     if(result != null){
         res.status(200).json({errorMessage:"",successful:true});
     }else{
-        res.status(200).json({errorMessage:''});
+        res.status(200).json({errorMessage:'Error en el servidor'});
     }
 };
 
 
 categoriaController.findById = async (req,res)=>{
-    var path="/"+req.params.id;
+    var path="/findById/"+req.params.id;
     const result= await utilService.GET(modulo,path);         
     if(result != null){
         const categoria =  result.data.categoria;
@@ -65,14 +66,23 @@ categoriaController.findById = async (req,res)=>{
 
 categoriaController.findAll =async (req,res)=>{
        
-    var path ="/ "
-     req.body.usuarioId =  req.user.usuarioId;
+    var path =(req!=undefined)?"/1":"/0";
      const result= await utilService.GET(modulo,path);
         if(result){
-            res.status(200).json({errorMessage:'',categorias:result.data.categorias,successful:true});
+            if(req != undefined){
+                res.status(200).json({errorMessage:'',categorias:result.data.categorias,successful:true});
+            }else{
+                console.log(result)
+                return result.data.categorias;
+            }
+               
         }else{
-            console.log(result);
-            res.status(200).json({errorMessage:'Error en el servidor',categorias:null});
+            if(req != undefined){
+                res.status(200).json({errorMessage:'Error en el servidor',categorias:null});
+            }else{
+                return null;s
+            }
+            
         }
 };  
 

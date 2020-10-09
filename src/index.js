@@ -51,6 +51,7 @@ app.use('/arathsBaby/index', require('./routes/index'));
 app.use('/arathsBaby/usuario', require('./routes/usuario'));
 app.use('/arathsBaby/proveedores', require('./routes/proveedor'));
 app.use('/arathsBaby/categorias', require('./routes/categoria'));
+app.use('/arathsBaby/productos', require('./routes/producto'));
 //Public
 app.use(express.static(path.join(__dirname, 'public')));
 //Startin server

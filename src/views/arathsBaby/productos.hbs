@@ -1,0 +1,153 @@
+ <head>  
+   <link rel="stylesheet" href="../css/groupbox.css">
+   <link rel="stylesheet" href="../fontawesome-free-5.12.1-web/css/all.css">
+   <script src="../js/util.js"></script>
+   <script src="../js/sweetalert2@9.js"></script>
+   <script src="../arathsBaby/js/properties.js"></script>
+   <script src="../arathsBaby/js/productos.js"></script>
+ </head>  
+
+   <div class="container-fluid">
+       <div class="row mtop-10">
+           <div class="col-sm-12">
+               <fieldset class="well">
+                   <legend class="well-legend text-uppercase">{{producto.LEGEND}}:</legend>
+                    <form id={{producto.FRM_NAME_ID}}>
+                         <div class="row">
+                             <input type="text" 
+                                style="display: none;"
+                                class="form-control material-control" 
+                                id={{producto.FRM_ID}} 
+                                name={{producto.FRM_ID}} 
+                                v-model={{producto.FRM_ID}} 
+                            >
+
+                            <div class="col-sm-4">
+                                 <div class="form-group">
+                                     <label for="{{producto.FRM_NAME}}">{{producto.KEY_NAME}}</label>
+                                     <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{producto.FRM_NAME}} 
+                                        name={{producto.FRM_NAME}} 
+                                        v-model={{producto.FRM_NAME}} 
+                                        maxlength="50" minlength="20" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{producto.msg_name}}" 
+                                        data-original-name="KEY_NAME"
+                                        required
+                                        >
+                                 </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="{{producto.FRM_DESC}}">{{producto.KEY_DESC}}</label>
+                                    <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{producto.FRM_DESC}} 
+                                        name={{producto.FRM_DESC}} 
+                                        v-model={{producto.FRM_DESC}} 
+                                        maxlength="5" minlength="100" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{producto.msg_name}}" 
+                                        data-original-name="KEY_DESC"
+                                        >
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="{{producto.FRM_PRECIO}}">{{producto.KEY_PRECIO}}</label>
+                                    <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{producto.FRM_PRECIO}} 
+                                        name={{producto.FRM_PRECIO}} 
+                                        v-model={{producto.FRM_PRECIO}} 
+                                        maxlength="5" minlength="100" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{producto.msg_name}}" 
+                                        data-original-name="KEY_PRECIO"
+                                        >
+                                </div>
+                            </div>
+                             <div class="col-sm-4">
+                                 <div class="form-group">
+                                     <label for="{{producto.FRM_UPLOAD}}">{{producto.KEY_UPLOAD}}</label>
+                                     <input type="file"
+                                        class="form-control material-control"
+                                        id={{producto.FRM_UPLOAD}}
+                                        name={{producto.FRM_UPLOAD}}
+                                        v-model={{producto.FRM_UPLOAD}}
+                                        pattern="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.jpg|.JPG|.gif|.GIF|.png|.PNG|.jpeg|.JPEG)$"
+                                        data-original-title={{producto.FRM_UPLOAD}}
+                                        data-original-name="KEY_UPLOAD"
+                                        required
+                                     >
+                                 </div>
+                            </div>
+                            <div class="col-sm-4">
+                                  <div class="form-group">
+                                      <label for="{{producto.FRM_CANT}}">{{producto.KEY_CANT}}</label>
+                                      <input type="text" 
+                                        class="form-control material-control" 
+                                        id={{producto.FRM_CANT}} 
+                                        name={{producto.FRM_CANT}} 
+                                        v-model={{producto.FRM_CANT}} 
+                                        maxlength="5" minlength="100" 
+                                        pattern="/[A-Za-z]$/" 
+                                        data-original-title="{{producto.msg_name}}" 
+                                        data-original-name="KEY_CANT"
+                                        required
+                                    >
+                                  </div>
+                              </div>
+                            <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="{{producto.FRM_CATEGORIA}}">{{producto.KEY_CATEGORIA}}</label>
+                                        <select 
+                                            class="form-control" 
+                                            name={{producto.FRM_CATEGORIA}} 
+                                            v-model={{producto.FRM_CATEGORIA}}  
+                                            data-original-title={{producto.msg_name}} 
+                                            data-original-name="KEY_CATEGORIA"
+                                            required
+                                        >
+                                            {{#each categorias}}
+                                                <option value="{{categoriaId}}">{{nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-sm-4">
+                                 <div class="form-group">
+                                     <label for="{{producto.FRM_PROV}}">{{producto.KEY_PROV}}</label>
+                                        <select 
+                                            class="form-control" 
+                                            name={{producto.FRM_PROV}} 
+                                            v-model={{producto.FRM_PROV}}  
+                                            data-original-title={{producto.msg_name}} 
+                                            data-original-name="KEY_PROV"
+                                            required
+                                        >
+                                            {{#each proveedores}}
+                                                <option value="{{proveedorId}}">{{nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                 </div>
+                            </div>
+                            <div class="col-sm-1">
+                                 <div class="form-group">
+                                     <label for="{{producto.FRM_DESCONT}}">{{producto.KEY_DESCONT}}</label>
+                                     <input type="checkbox"
+                                        class="form-control material-control"
+                                        name={{producto.FRM_DESCONT}}
+                                        v-model={{producto.FRM_DESCONT}}
+                                        data-original-title={{producto.msg_name}}
+                                        required
+                                     >
+                                 </div>
+                            </div>
+                         </div>
+                    </form>
+               </fieldset>
+           </div>
+       </div>
+   </div>
