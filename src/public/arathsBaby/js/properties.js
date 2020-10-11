@@ -31,6 +31,31 @@ const categoria ={
     KEY__DESC:'Descripción'
 };
 
+
+const producto={
+    FRM_NAME_ID:'frm_producto',
+    FRM_ID:'productoId',
+    FRM_NAME:'nombre',
+    FRM_DESC:'descripcion',
+    FRM_CANT:'cantidad',
+    FRM_PRECIO:'precio',
+    FRM_UPLOAD:'upload',
+    FRM_CATEGORIA:'categoriaId',
+    FRM_PROV:'proveedorId',
+    FRM_DESCONT:'descontinuado',
+    FRM_ESTATUS:'estatusId',
+    LEGEND:'Producto',
+    KEY_NAME:'Nombre',
+    KEY_DESC:'Descripción',
+    KEY_PRECIO:'Precio',
+    KEY_UPLOAD:'Imagen del Producto',
+    KEY_CANT:'Canatidad',
+    KEY_CATEGORIA:'Categoría',
+    KEY_PROV:'Proveedor',
+    KEY_DESCONT:'Descontinuado?',
+    msg_name:'Nombre es requerido'
+};  
+
 const mesages={
     msg_lon_M:'El ${text} no debe de superar ${number} caracteres',
     msg_lon_m:'El ${text} debe de cumplir por lo menos ${number} caracteres'

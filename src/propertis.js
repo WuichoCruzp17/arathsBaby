@@ -41,6 +41,7 @@ const producto={
     FRM_PRECIO:'precio',
     FRM_CATEGORIA:'categoriaId',
     FRM_PROV:'proveedorId',
+    FRM_UPLOAD:'upload',
     FRM_DESCONT:'descontinuado',
     FRM_ESTATUS:'estatusId',
     LEGEND:'Producto',

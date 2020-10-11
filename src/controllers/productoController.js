@@ -16,4 +16,20 @@ productoController.index = async (req,res)=>{
 };
 
 
+productoController.save = async(req,res)=>{
+
+    var path ="/save"
+    req.body.usuarioCreacionId =  req.user.usuarioId;
+    req.body.usuarioModificoId =  req.user.usuarioId;
+    req.body.productoId = null;
+    const result= await utilService.POST(req.body,modulo,path);
+    if(result != null){
+        res.status(200).json({errorMessage:"",successful:true});
+    }else{
+        console.log(result);
+        res.status(200).json({errorMessage:result.data.errorMessage});
+    }
+
+};
+
 module.exports = productoController;
