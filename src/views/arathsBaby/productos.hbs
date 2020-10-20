@@ -148,6 +148,18 @@
                                      >
                                  </div>
                             </div>
+                            <div class="col-sm-1 col-md-offset-1">
+                                 <div class="form-group">
+                                     <label for="{{producto.FRM_PROTALLA}}">{{producto.KEY_PROTALLA}}</label>
+                                     <input type="checkbox"
+                                        class="form-control material-control"
+                                        name={{producto.FRM_PROTALLA}}
+                                        v-model={{producto.FRM_PROTALLA}}
+                                        data-original-title={{producto.msg_name}}
+                                        @change="onChangeFileTalla($event)"
+                                     >
+                                 </div>
+                            </div>
                             <div class="col-sm-12">
                                 <p class="text-center">
                                     <button type="button" class="btn btn-success mtop-10" value="{{producto.FRM_NAME_ID}}" v-on:click="validateSupplier">{{global.KEY_SAVE}}</button>
@@ -159,4 +171,133 @@
                </fieldset>
            </div>
        </div>
-   </div>
+       <div class="row mtop-10" id="search"  >
+        <div class="col-sm-12" >
+            <fieldset class="well" id="demo" v-show="{{proTalla.DIV_SHOW}}">
+                <legend class="well-legend text-uppercase">Lista de Producto Talla:</legend>
+                <div class="">
+                    <div class="col-lg-4">
+                        <div class="group-material">
+                        <form id="" style="margin-bottom:5px">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                     Buscar <input name="query" v-model="searchQuery" class="form-control">
+                                </div>
+                                <div class="col-sm-2">
+                                     <button type="button" class="btn btn-success mtop-20" style="margin-top: 20px;"   data-toggle="modal" data-target="#exampleModalLong">Agregar</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                 </div>
+                </div>
+               <demo-grid :heroes="gridData" :columns="gridColumns" :filter-key="searchQuery">
+               </demo-grid>
+            </fieldset>
+          </div>
+      </div>
+    </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLong" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="{{proTalla.FRM_CATEGORIA}}">{{proTalla.KEY_CATEGORIA}}</label>
+                            <select 
+                                class="form-control" 
+                                name={{proTalla.FRM_CATEGORIA}} 
+                                v-model={{proTalla.FRM_CATEGORIA}}  
+                                data-original-title={{proTalla.msg_name}} 
+                                data-original-name="KEY_CATEGORIA"
+                                required
+                            >
+                                <option value="0">--Seleccione una opción---</option>
+                                    {{#each tallas}}
+                                        <option value="{{tallaId}}">{{nombre}}</option>
+                                    {{/each}}
+                            </select>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label for="{{proTalla.FRM_DESC}}">{{proTalla.KEY_DESC}}</label>
+                        <input type="text" 
+                                class="form-control material-control" 
+                                id={{proTalla.FRM_DESC}} 
+                                name={{proTalla.FRM_DESC}} 
+                                v-model={{proTalla.FRM_DESC}} 
+                                maxlength="100" minlength="5" 
+                                pattern="/[A-Za-z]$/" 
+                                data-original-title="{{proTalla.msg_name}}" 
+                                data-original-name="KEY_DESC"
+                        >
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">{{global.KEY_SAVE}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+   <script type="text/x-template" id="grid-template">
+    <div class="container-fluid">
+          <table class="table">
+            <thead>
+              <tr>
+                <th v-for="key in columns"
+                  @click="sortBy(key)" 
+                  
+                  \:class="{ active: sortKey == key.column }">
+                  
+                  <template v-if="key.column !==''">
+                    \{{ key.name | capitalize }}
+                  <span class="arrow" :class="sortOrders[key.column] > 0 ? 'asc' : 'dsc'" >
+                  </span>
+                  </template>
+                 
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="entry in filteredHeroes">
+                <td>\{{entry['talla']}}</td>
+                <td>
+                    \{{entry['descripcion']}}
+                </td>
+                <td>
+                    \{{entry['cantidad']}}
+                </td>
+                <td>
+                    <button type='button' class="btn btn-primary"  v-on:click='findById(entry["tallaId"])' >
+                      <span class="fa fa-pencil-alt"></span>
+                    </button>
+                    <button v-if='entry["isActive"]==true' type='button' class="btn btn-default"  v-on:click='changeStatus(entry["tallaId"])' >
+                      <span class="fa fa-eye"></span>
+                    </button>
+                    <button v-else type='button' class="btn btn-default"  v-on:click='changeStatus(entry["tallaId"])' >
+                      <span class="fa fa-eye-slash"></span>
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </script>

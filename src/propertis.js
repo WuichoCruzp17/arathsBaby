@@ -44,6 +44,7 @@ const producto={
     FRM_UPLOAD:'upload',
     FRM_DESCONT:'descontinuado',
     FRM_ESTATUS:'estatusId',
+    FRM_PROTALLA:'producto_tallas',
     LEGEND:'Producto',
     KEY_NAME:'Nombre',
     KEY_DESC:'Descripción',
@@ -53,8 +54,33 @@ const producto={
     KEY_CATEGORIA:'Categoría',
     KEY_PROV:'Proveedor',
     KEY_DESCONT:'Descontinuado?',
+    KEY_PROTALLA:'Tallas?',
     msg_name:'Nombre es requerido'
 };  
+
+const talla ={
+    FRM_NAME_ID:'frm_talla',
+    FRM_ID:'tallaId',
+    FRM_NAME:'nombre',
+    FRM_DESC:'descripcion',
+    FRM_CATEGORIA:'categoriaId',
+    KEY_NAME:'Nombre',
+    KEY_DESC:'Descripción'
+};
+
+const proTalla ={
+    FRM_NAME_ID:'frm_proTalla',
+    FRM_ID:'protalla_id',
+    FRM_PRODUCTO:'productoId',
+    FRM_TALLA:'tallaId',
+    FRM_DESC:'descripcion',
+    FRM_CANT:'cantidad',
+    KEY_DESC:'Descripción',
+    KEY_CANT:'Canatidad',
+    DIV_LISTA:'div_lista',
+    DIV_SHOW:'show',
+    msg_name:'Nombre es requerido'
+};
 
 const mesages={
     msg_lon_M:'El ${text} no debe de superar ${number} caracteres',
@@ -69,4 +95,4 @@ const global ={
     KEY_MOD:'Modificar',
     KEY_CLEAN:'Limpiar'
 };
-module.exports = {proveedor,mesages,global, categoria, producto};
+module.exports = {proveedor,mesages,global, categoria, producto, talla,proTalla};

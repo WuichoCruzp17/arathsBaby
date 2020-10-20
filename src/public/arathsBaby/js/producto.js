@@ -93,27 +93,6 @@ modsJS.img ={};
 
 modsJS.ini =function(){
 
-    modsJS[producto.FRM_NAME_ID] =null;
-    const data_frm_supp ={};
-    data_frm_supp[producto.FRM_ID] ='';
-    data_frm_supp[producto.FRM_NAME] ="";
-    data_frm_supp[producto.FRM_DESC] ='';
-    data_frm_supp[producto.FRM_CANT] ='';
-    data_frm_supp[producto.FRM_PRECIO] ='';
-    data_frm_supp[producto.FRM_UPLOAD] ='';
-    data_frm_supp[producto.FRM_CATEGORIA] ='0';
-    data_frm_supp[producto.FRM_PROV] ='0';
-    data_frm_supp[producto.FRM_DESCONT] =false;
-    modsJS[producto.FRM_NAME_ID] =util.createVueFrom({
-        el:'#'+producto.FRM_NAME_ID,
-        model:data_frm_supp,
-        methods:{
-            validateSupplier:productoJS.validateModel,
-            limpiar:productoJS.limpiar,
-            onChangeFile:modsJS.onChangeFile
-        }
-    });
-
     modsJS.onChangeFile=function(e){
         // Creamos el objeto de la clase FileReader
         let reader = new FileReader();
@@ -148,6 +127,77 @@ modsJS.ini =function(){
 
    // productoJS.findAll();
 
+   modsJS.grid = utilGrid.createGrid({
+    script:'#grid-template',
+    element:'#demo',
+    columns:[
+        {name:'Nombre', column:'nombre'},{name:'Descripcion', column:'descripcion'},{name:'', column:''}
+    ],
+    data:[],
+    show:false,
+    component:modsJS.getComponent()
+});
+
+modsJS[producto.FRM_NAME_ID] =null;
+const data_frm_supp ={};
+data_frm_supp[producto.FRM_ID] ='';
+data_frm_supp[producto.FRM_NAME] ="";
+data_frm_supp[producto.FRM_DESC] ='';
+data_frm_supp[producto.FRM_CANT] ='';
+data_frm_supp[producto.FRM_PRECIO] ='';
+data_frm_supp[producto.FRM_UPLOAD] ='';
+data_frm_supp[producto.FRM_CATEGORIA] ='0';
+data_frm_supp[producto.FRM_PROV] ='0';
+data_frm_supp[producto.FRM_DESCONT] =false;
+data_frm_supp[producto.FRM_PROTALLA] =false;
+
+modsJS[producto.FRM_NAME_ID] =util.createVueFrom({
+    el:'#'+producto.FRM_NAME_ID,
+    model:data_frm_supp,
+    methods:{
+        validateSupplier:productoJS.validateModel,
+        limpiar:productoJS.limpiar,
+        onChangeFile:modsJS.onChangeFile,
+        onChangeFileTalla:function($event){
+            modsJS.grid.show= modsJS[producto.FRM_NAME_ID][producto.FRM_PROTALLA];
+        }
+    }
+
+});
+
+};
+
+const proTallaJS ={};
+
+proTallaJS.setModel =function(){
+    Swal.mixin({
+        input: 'text',
+        required:'required',
+        confirmButtonText: 'Next &rarr;',
+        showCancelButton: true,
+        buttonsStyling: false,
+        progressSteps: ['1', '2']
+      }).queue([
+        {
+          title: 'Nombre',
+          text: '',
+          required:'required',
+        },
+        'Descripcion'
+      ]).then((result) => {
+        if (result.value) {
+          const answers = JSON.stringify(result.value)
+          Swal.fire({
+            title: 'All done!',
+            html: `
+              Your answers:
+              <pre><code>${answers}</code></pre>
+            `,
+            confirmButtonText: 'Lovely!'
+          })
+        }
+      });  
+    
 };
 
 modsJS.getComponent = function(){

@@ -26,7 +26,5 @@ module.exports = {
             return res.redirect('/biblioteca/index');
          }
         
-            
-        
      }
 };

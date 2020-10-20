@@ -287,7 +287,8 @@ var utilGrid = {
       data: {
         searchQuery: '',
         gridColumns: object.columns,
-        gridData: object.data
+        gridData: object.data,
+        show:(object.show !=undefined)? object.show :true
       }
     });
 
