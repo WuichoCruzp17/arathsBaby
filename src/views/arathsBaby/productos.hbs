@@ -107,7 +107,6 @@
                                             class="form-control" 
                                             name={{producto.FRM_CATEGORIA}} 
                                             v-model={{producto.FRM_CATEGORIA}}  
-                                            data-original-title={{producto.msg_name}} 
                                             data-original-name="KEY_CATEGORIA"
                                             required
                                         >
@@ -125,7 +124,6 @@
                                             class="form-control" 
                                             name={{producto.FRM_PROV}} 
                                             v-model={{producto.FRM_PROV}}  
-                                            data-original-title={{producto.msg_name}} 
                                             data-original-name="KEY_PROV"
                                             required
                                         >
@@ -204,23 +202,40 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">{{proTalla.MODAL_TITLE}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id={{proTalla.FRM_NAME_ID}}>
             <div class="row">
+              <div class="form-group hidden">
+                  <input type="text" 
+                          class="form-control"
+                          id="{{proTalla.FRM_POSI}}"
+                          name={{proTalla.FRM_POSI}}
+                          v-model={{proTalla.FRM_POSI}}
+                          hidden="true"
+                  >
+                </div>
+              <div class="form-group hidden">
+                  <input type="text" 
+                          class="form-control"
+                          id="{{proTalla.FRM_ID}}"
+                          name={{proTalla.FRM_ID}}
+                          v-model={{proTalla.FRM_ID}}
+                          hidden="true"
+                  >
+                </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="{{proTalla.FRM_CATEGORIA}}">{{proTalla.KEY_CATEGORIA}}</label>
+                        <label for="{{proTalla.FRM_TALLA}}">{{proTalla.KEY_TALLA}}</label>
                             <select 
                                 class="form-control" 
-                                name={{proTalla.FRM_CATEGORIA}} 
-                                v-model={{proTalla.FRM_CATEGORIA}}  
-                                data-original-title={{proTalla.msg_name}} 
-                                data-original-name="KEY_CATEGORIA"
+                                name={{proTalla.FRM_TALLA}} 
+                                v-model={{proTalla.FRM_TALLA}}  
+                                data-original-name="KEY_TALLA"
                                 required
                             >
                                 <option value="0">--Seleccione una opción---</option>
@@ -230,7 +245,7 @@
                             </select>
                     </div>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label for="{{proTalla.FRM_DESC}}">{{proTalla.KEY_DESC}}</label>
                         <input type="text" 
@@ -240,17 +255,33 @@
                                 v-model={{proTalla.FRM_DESC}} 
                                 maxlength="100" minlength="5" 
                                 pattern="/[A-Za-z]$/" 
-                                data-original-title="{{proTalla.msg_name}}" 
                                 data-original-name="KEY_DESC"
+                                required
+                        >
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="{{proTalla.FRM_CANT}}">{{proTalla.KEY_CANT}}</label>
+                        <input type="text" 
+                                class="form-control material-control isNumber" 
+                                id={{proTalla.FRM_CANT}} 
+                                name={{proTalla.FRM_CANT}} 
+                                v-model={{proTalla.FRM_CANT}} 
+                                maxlength="100" minlength="5" 
+                                pattern="/^[0-9]$/" 
+                                data-original-title="{{proTalla.msg_name}}" 
+                                data-original-name="KEY_CANT"
+                                required
                         >
                     </div>
                 </div>
             </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">{{global.KEY_SAVE}}</button>
+      <div class="modal-footer" id={{proTalla.MODAL_BOT}}>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarModal">Cancelar</button>
+        <button type="button" class="btn btn-success" value="{{proTalla.FRM_NAME_ID}}" v-on:click="validateForm">{{global.KEY_SAVE}}</button>
       </div>
     </div>
   </div>

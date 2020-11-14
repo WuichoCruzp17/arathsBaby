@@ -8,6 +8,9 @@
      <i class="zmdi zmdi-account-circle zmdi-hc-5x"></i>
  </p>
  <h4 class="text-center all-tittles" style="margin-bottom: 30px;">inicia sesión con tu cuenta</h4>
+ {{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+{{/if}}
  <form id="login-form" action="/validateSession" method="POST"  role="form">
       <div class="group-material-login">
         <input type="text" class="material-login-control" name="username" required="" maxlength="70">

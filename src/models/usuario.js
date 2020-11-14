@@ -1,7 +1,7 @@
 const helpers = require('../lib/helpers');
 let usuario ={};
 
-usuario.table= {name:'usuario'}
+usuario.table= {name:'USUARIO'}
 
 usuario.columns ={
     usuarioId:{
@@ -10,6 +10,18 @@ usuario.columns ={
     },
     nombre:{
         column:'nombre'
+    },
+    segundoNombre:{
+        column:'segundoNombre'
+    },
+    apellidoPaterno:{
+        column:'apellidoPaterno'
+    },
+    apellidoMaterno:{
+        column:'apellidoMaterno'
+    },
+    nombreUsuario:{
+        column:'nombreUsuario'
     },
     direccion:{
         column:'direccion'

@@ -93,7 +93,7 @@ var util = {
                         } else {
                             inputsErr.push({
                                 pattern: true,
-                                title: "Información proporcionada no valida: "+property[$elements[i].getAttribute('data-original-name')],
+                                title: "Información proporcionada no valida: ",
                                 name: property[$elements[i].getAttribute('data-original-name')]
                             });
                         }
@@ -104,7 +104,7 @@ var util = {
                           }else{
                             inputsErr.push({
                               pattern: true,
-                              title: "Información proporcionada no valida: "+property[$elements[i].getAttribute('data-original-name')],
+                              title: "Información proporcionada no valida: ",
                               name: property[$elements[i].getAttribute('data-original-name')]
                           });
                           }
@@ -129,7 +129,7 @@ var util = {
                 } else {
                     inputsErr.push({
                         pattern: false,
-                        title: $elements[i].getAttribute('data-original-title'),
+                        title:"Es requerido",
                         name: property[$elements[i].getAttribute('data-original-name')]
                     });
                 }
@@ -142,7 +142,7 @@ var util = {
                           }else{
                             inputsErr.push({
                                         pattern: true,
-                                        title: "Información proporcionada no valida: "+property[$elements[i].getAttribute('data-original-name')],
+                                        title: "Información proporcionada no valida: ",
                                         name: property[$elements[i].getAttribute('data-original-name')]
                             });
                           }
@@ -159,7 +159,7 @@ var util = {
             var text = "Revise los siguientes campos del formulario :<br>";
             var cant = inputsErr.length - 1;
             for (i = 0; i < inputsErr.length; i++) {
-                text += (i < cant) ? inputsErr[i].title + "<br>" : inputsErr[i].title ;
+                text += (i < cant) ? inputsErr[i].title +" "+inputsErr[i].name+ "<br>" : inputsErr[i].title +" "+inputsErr[i].name ;
             }
             messageJS.showMessage('!Formulario No valido!',text,'error');
             return {validate:false};

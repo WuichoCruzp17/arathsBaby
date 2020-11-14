@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", function (event) {
     modsJS.ini();
 });
@@ -10,6 +8,11 @@ productoJS.validateModel=function(event){
     const result = util.validateForm(event.target.value, producto);
     if(result.validate){
         if(result.entity.productoId==""){
+         
+            if(result.entity.producto_tallas){
+                result.entity.cantidad = modsJS.grid.gridData.length;
+                result.entity.productosTalla = JSON.parse(JSON.stringify(modsJS.grid._data.gridData));
+            }
             productoJS.save(result.entity);
         }else{
             productoJS.update(result.entity);
@@ -28,9 +31,11 @@ productoJS.save=async function(model){
     model.upload  = {};
     model.upload.ext  = modsJS.img.ext;
     model.upload.path  = modsJS.img.path;
-    const result = await utilXHTTP.post("productos/save",model);
+    const result = await utilXHTTP.post("productos/save",JSON.stringify(model));
     if(result.successful){
         messageJS.showMessage("Procedimiento exitoso","Se ha  guardado el nuevo producto","success");
+        proTallaJS.limpiarTabla();
+        modsJS.grid.show = false;
         //productoJS.findAll();
         productoJS.limpiar();
     }else{
@@ -86,6 +91,44 @@ productoJS.findAll = async function(){
         modsJS.grid._data.gridData =result.productoes;
     }
 };
+const proTallaJS ={};
+
+proTallaJS.limpiar = function(){
+    const form = document.getElementById(proTalla.FRM_NAME_ID);
+    form.reset();
+};
+
+proTallaJS.validateModel=function(event){
+    const result = util.validateForm(event.target.value, proTalla);
+    if(result.validate){
+        if(result.entity[proTalla.FRM_POSI] ==""){
+            if(modsJS.frm_producto.$data[producto.FRM_ID]!=""){
+                proTallaJS.save();
+            }else{
+                result.entity.talla =jQuery('select[name="tallaId"] option:selected').text();
+                modsJS.grid._data.gridData.push(result.entity);
+                const proTallas =modsJS.grid._data.gridData;
+                var cantidad =0;
+                for(var i =0;i<proTallas.length;i++){
+                    cantidad=cantidad+parseInt(proTallas[i].cantidad);
+                }
+                modsJS[producto.FRM_NAME_ID].$data[producto.FRM_CANT]= cantidad;
+                proTallaJS.limpiar();
+                jQuery("#cerrarModal").click();
+            }
+
+        }else{
+            modsJS.grid._data.gridData[parseInt(proTalla.FRM_POSI)] = result.entity;
+        }
+    }
+};
+proTallaJS.save =  async function(){
+
+};
+
+proTallaJS.limpiarTabla  = function(){
+    modsJS.grid.$data.gridData = []
+}
 
 const modsJS ={};
 
@@ -102,18 +145,6 @@ modsJS.ini =function(){
             console.log(reader);
         }
     };
-    jQuery("#"+producto.FRM_UPLOAD).change(function(e){
-              // Creamos el objeto de la clase FileReader
-              let reader = new FileReader();
-              reader.readAsDataURL(e.target.files[0]);
-              modsJS.img.ext = e.target.files[0].type.replace("image/","");
-              console.log(reader);
-              reader.onload = function(){
-                 
-                  modsJS.img.path = reader.result;
-              }
-              
-    });
 
 /*     modsJS.grid = utilGrid.createGrid({
         script:'#grid-template',
@@ -131,7 +162,7 @@ modsJS.ini =function(){
     script:'#grid-template',
     element:'#demo',
     columns:[
-        {name:'Nombre', column:'nombre'},{name:'Descripcion', column:'descripcion'},{name:'', column:''}
+        {name:'Talla', column:'talla'},{name:'Descripcion', column:'descripcion'},{name:'Cantidad', column:'cantidad'},{name:'', column:''}
     ],
     data:[],
     show:false,
@@ -139,21 +170,21 @@ modsJS.ini =function(){
 });
 
 modsJS[producto.FRM_NAME_ID] =null;
-const data_frm_supp ={};
-data_frm_supp[producto.FRM_ID] ='';
-data_frm_supp[producto.FRM_NAME] ="";
-data_frm_supp[producto.FRM_DESC] ='';
-data_frm_supp[producto.FRM_CANT] ='';
-data_frm_supp[producto.FRM_PRECIO] ='';
-data_frm_supp[producto.FRM_UPLOAD] ='';
-data_frm_supp[producto.FRM_CATEGORIA] ='0';
-data_frm_supp[producto.FRM_PROV] ='0';
-data_frm_supp[producto.FRM_DESCONT] =false;
-data_frm_supp[producto.FRM_PROTALLA] =false;
+const data_frm_prod ={};
+data_frm_prod[producto.FRM_ID] ='';
+data_frm_prod[producto.FRM_NAME] ="";
+data_frm_prod[producto.FRM_DESC] ='';
+data_frm_prod[producto.FRM_CANT] ='';
+data_frm_prod[producto.FRM_PRECIO] ='';
+data_frm_prod[producto.FRM_UPLOAD] ='';
+data_frm_prod[producto.FRM_CATEGORIA] ='0';
+data_frm_prod[producto.FRM_PROV] ='0';
+data_frm_prod[producto.FRM_DESCONT] =false;
+data_frm_prod[producto.FRM_PROTALLA] =false;
 
 modsJS[producto.FRM_NAME_ID] =util.createVueFrom({
     el:'#'+producto.FRM_NAME_ID,
-    model:data_frm_supp,
+    model:data_frm_prod,
     methods:{
         validateSupplier:productoJS.validateModel,
         limpiar:productoJS.limpiar,
@@ -165,40 +196,38 @@ modsJS[producto.FRM_NAME_ID] =util.createVueFrom({
 
 });
 
+const data_frm_proTalla  ={};
+modsJS[proTalla.FRM_NAME_ID] =null;
+data_frm_proTalla[proTalla.FRM_TALLA] ='0';
+data_frm_proTalla[proTalla.FRM_DESC] ='';
+data_frm_proTalla[proTalla.FRM_POSI] ='';
+data_frm_proTalla[proTalla.FRM_ID] ='';
+data_frm_proTalla[proTalla.FRM_CANT] ='';
+modsJS[proTalla.FRM_NAME_ID] =util.createVueFrom({
+    el:'#'+proTalla.FRM_NAME_ID,
+    model:data_frm_proTalla,
+    methods:{
+        validateSupplier:productoJS.validateModel,
+        limpiar:proTalla.limpiar
+    }
+
+});
+
+modsJS[proTalla.MODAL_BOT] =null;
+modsJS[proTalla.MODAL_BOT] =util.createVueFrom({
+    el:'#'+proTalla.MODAL_BOT,
+    model:[],
+    methods:{
+        validateForm:proTallaJS.validateModel
+    }
+
+});
+
 };
 
-const proTallaJS ={};
 
-proTallaJS.setModel =function(){
-    Swal.mixin({
-        input: 'text',
-        required:'required',
-        confirmButtonText: 'Next &rarr;',
-        showCancelButton: true,
-        buttonsStyling: false,
-        progressSteps: ['1', '2']
-      }).queue([
-        {
-          title: 'Nombre',
-          text: '',
-          required:'required',
-        },
-        'Descripcion'
-      ]).then((result) => {
-        if (result.value) {
-          const answers = JSON.stringify(result.value)
-          Swal.fire({
-            title: 'All done!',
-            html: `
-              Your answers:
-              <pre><code>${answers}</code></pre>
-            `,
-            confirmButtonText: 'Lovely!'
-          })
-        }
-      });  
-    
-};
+
+
 
 modsJS.getComponent = function(){
     utilGrid.methods.findById = productoJS.findById;
@@ -213,3 +242,16 @@ modsJS.getComponent = function(){
               methods: utilGrid.methods
         }
 };
+
+jQuery("#"+producto.FRM_UPLOAD).change(function(e){
+    // Creamos el objeto de la clase FileReader
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    modsJS.img.ext = e.target.files[0].type.replace("image/","");
+    console.log(reader);
+    reader.onload = function(){
+       
+        modsJS.img.path = reader.result;
+    }
+    
+});

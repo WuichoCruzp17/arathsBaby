@@ -25,6 +25,7 @@ passport.use('local.signin',new LocalStrategy({
                 console.log("Valido passord");
                 done(null, user, req.flash('success','Welcome '+ user.nombre));
             }else{
+                console.log("Password Incorrect");
                 done(null, false, req.flash('message', 'Incorrect Password'));
             }
         }else{

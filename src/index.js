@@ -5,6 +5,7 @@ const path =    require('path');
 const flash=require('connect-flash');
 const session =    require('express-session');
 const mysqlStore=    require('express-mysql-session');
+const bodyParser = require('body-parser');
 const {database,errorpage} =    require('./keys');
 const passport =    require('passport');
 
@@ -34,7 +35,7 @@ app.use(session({
 app.use(flash());//Enviar mensajes
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 //Global Variables

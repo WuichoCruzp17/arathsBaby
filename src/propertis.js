@@ -75,10 +75,14 @@ const proTalla ={
     FRM_TALLA:'tallaId',
     FRM_DESC:'descripcion',
     FRM_CANT:'cantidad',
+    FRM_POSI:'posicionArray',
     KEY_DESC:'Descripción',
     KEY_CANT:'Canatidad',
+    KEY_TALLA:'Talla',
     DIV_LISTA:'div_lista',
     DIV_SHOW:'show',
+    MODAL_TITLE:'Talla disponible',
+    MODAL_BOT:'modal_bot',
     msg_name:'Nombre es requerido'
 };
 

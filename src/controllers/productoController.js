@@ -21,15 +21,19 @@ productoController.index = async (req,res)=>{
 productoController.save = async(req,res)=>{
 
     var path ="/save"
-    req.body.usuarioCreacionId =  req.user.usuarioId;
-    req.body.usuarioModificoId =  req.user.usuarioId;
-    req.body.productoId = null;
-    const result= await utilService.POST(req.body,modulo,path);
+    console.log(Object.keys(req.body))
+    var body = JSON.parse(Object.keys(req.body)[0]);
+    console.log("Usuario---->"+req.user.usuarioId)
+    body.usuarioCreacionId =  req.user.usuarioId;
+    body.usuarioModificoId =  req.user.usuarioId;
+    body.productoId = null;
+    console.log("BOdy a envar --->"+JSON.stringify(body));
+    const result= await utilService.POST(body,modulo,path);
     if(result != null){
         res.status(200).json({errorMessage:"",successful:true});
     }else{
-        console.log(result);
-        res.status(200).json({errorMessage:result.data.errorMessage});
+        
+        res.status(200).json({errorMessage:result});
     }
 
 };

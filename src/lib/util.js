@@ -40,7 +40,7 @@ const utilService ={
         try{
              resuslt = await axios.post(constantes.uri+modulo+path,data);
         }catch(error){
-            console.log(error);
+            console.log("Error en el servicio"+error);
         }
         
         return resuslt;
