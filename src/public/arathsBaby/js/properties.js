@@ -32,6 +32,7 @@ const categoria ={
     KEY__DESC:'Descripción'
 };
 
+
 const producto={
     FRM_NAME_ID:'frm_producto',
     FRM_ID:'productoId',
@@ -45,6 +46,7 @@ const producto={
     FRM_DESCONT:'descontinuado',
     FRM_ESTATUS:'estatusId',
     FRM_PROTALLA:'producto_tallas',
+    FRM_GUARDAR_ID:'btnSaveId',
     LEGEND:'Producto',
     KEY_NAME:'Nombre',
     KEY_DESC:'Descripción',
@@ -55,6 +57,7 @@ const producto={
     KEY_PROV:'Proveedor',
     KEY_DESCONT:'Descontinuado?',
     KEY_PROTALLA:'Tallas?',
+    KEY_ESPERE:'Espere..',
     msg_name:'Nombre es requerido'
 };  
 

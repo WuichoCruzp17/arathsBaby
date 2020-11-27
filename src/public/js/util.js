@@ -164,7 +164,7 @@ var util = {
             messageJS.showMessage('!Formulario No valido!',text,'error');
             return {validate:false};
         } else {
-            return {validate:true, entity};
+            return {validate:true, entity,inputsErr};
         }
   },
 
@@ -281,7 +281,7 @@ var utilGrid = {
   },
 
   createGrid: function (object) {
-    Vue.component('demo-grid', object.component)
+    Vue.component(object.grid, object.component)
     var demo = new Vue({
       el: object.element,
       data: {

@@ -6,7 +6,11 @@
    <script src="../arathsBaby/js/properties.js"></script>
    <script src="../arathsBaby/js/producto.js"></script>
  </head>  
-
+<div class="container">
+  <div class="page-header">
+     <h1 class="all-tittles">Sistema de Iventario <small>Administración de Productos</small></h1>
+  </div>
+ </div>
    <div class="container-fluid">
        <div class="row mtop-10">
            <div class="col-sm-12">
@@ -80,7 +84,6 @@
                                         pattern="/^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.jpg|.JPG|.gif|.GIF|.png|.PNG|.jpeg|.JPEG)$/"
                                         data-original-title={{producto.FRM_UPLOAD}}
                                         data-original-name="KEY_UPLOAD"
-                                        required
                                      >
                                  </div>
                             </div>
@@ -160,7 +163,7 @@
                             </div>
                             <div class="col-sm-12">
                                 <p class="text-center">
-                                    <button type="button" class="btn btn-success mtop-10" value="{{producto.FRM_NAME_ID}}" v-on:click="validateSupplier">{{global.KEY_SAVE}}</button>
+                                    <button type="button" class="btn btn-success mtop-10" value="{{producto.FRM_NAME_ID}}" v-on:click="validateSupplier" id="{{producto.FRM_GUARDAR_ID}}">{{global.KEY_SAVE}}</button>
                                     <button type="button" class="btn btn-default mtop-10" v-on:click="limpiar">{{global.KEY_CLEAN}}</button>
                                 </p>
                             </div>
@@ -169,6 +172,32 @@
                </fieldset>
            </div>
        </div>
+       <div class="row mtop-10" id="searchProduto"  >
+        <div class="col-sm-12" >
+            <fieldset class="well" id="divProductos">
+              <legend class="well-legend text-uppercase" style="cursor: pointer;" id="contraerTabla">Lista Productos:</legend>
+              <div id="contenedorTablaProducto">
+
+                    <div class="col-lg-4">
+                        <div class="group-material">
+                        <form id="" style="margin-bottom:5px">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                     Buscar <input name="query" v-model="searchQuery" class="form-control">
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                 </div>
+
+               <producto-grid :heroes="gridData" :columns="gridColumns" :filter-key="searchQuery">
+               </producto-grid>
+
+              </div>
+                
+            </fieldset>
+          </div>
+      </div>
        <div class="row mtop-10" id="search"  >
         <div class="col-sm-12" >
             <fieldset class="well" id="demo" v-show="{{proTalla.DIV_SHOW}}">
@@ -236,6 +265,7 @@
                                 name={{proTalla.FRM_TALLA}} 
                                 v-model={{proTalla.FRM_TALLA}}  
                                 data-original-name="KEY_TALLA"
+                                id={{proTalla.FRM_TALLA}}
                                 required
                             >
                                 <option value="0">--Seleccione una opción---</option>
@@ -324,6 +354,53 @@
                       <span class="fa fa-eye"></span>
                     </button>
                     <button v-else type='button' class="btn btn-default"  v-on:click='changeStatus(entry["tallaId"])' >
+                      <span class="fa fa-eye-slash"></span>
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </script>
+   <script type="text/x-template" id="grid-producto">
+    <div class="container-fluid">
+          <table class="table">
+            <thead>
+              <tr>
+                <th v-for="key in columns"
+                  @click="sortBy(key)" 
+                  
+                  \:class="{ active: sortKey == key.column }">
+                  
+                  <template v-if="key.column !==''">
+                    \{{ key.name | capitalize }}
+                  <span class="arrow" :class="sortOrders[key.column] > 0 ? 'asc' : 'dsc'" >
+                  </span>
+                  </template>
+                 
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="entry in filteredHeroes">
+                <td>\{{entry['nombre']}}</td>
+                <td>
+                    \{{entry['descripcion']}}
+                </td>
+                <td>
+                    \{{entry['cantidad']}}
+                </td>
+                <td>
+                    \{{entry['precio']}}
+                </td>
+                <td>
+                    <button type='button' class="btn btn-primary"  v-on:click='findById(entry["productoId"])' >
+                      <span class="fa fa-pencil-alt"></span>
+                    </button>
+                    <button v-if='entry["isActive"]==true' type='button' class="btn btn-default"  v-on:click='changeStatus(entry["productoId"])' >
+                      <span class="fa fa-eye"></span>
+                    </button>
+                    <button v-else type='button' class="btn btn-default"  v-on:click='changeStatus(entry["productoId"])' >
                       <span class="fa fa-eye-slash"></span>
                     </button>
                 </td>

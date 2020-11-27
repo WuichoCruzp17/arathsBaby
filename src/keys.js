@@ -13,5 +13,6 @@ module.exports ={
         }
     },
 
-    uri:"http://localhost:3001"
+    //uri:"http://localhost:3001"
+    uri:'https://arathsbaby.uc.r.appspot.com'
 };

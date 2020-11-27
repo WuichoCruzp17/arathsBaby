@@ -105,6 +105,7 @@ modsJS.ini =function(){
     modsJS.grid = utilGrid.createGrid({
         script:'#grid-template',
         element:'#demo',
+        grid:'demo-grid',
         columns:[
             {name:'Nombre', column:'nombre'},{name:'descripcion', column:'descripcion'},{name:'', column:''}
         ],

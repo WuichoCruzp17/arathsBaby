@@ -1,11 +1,39 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     modsJS.ini();
+    jQuery("#contraerTabla").click(function(e){
+        // Creamos el objeto de la clase FileReader
+        jQuery("#contenedorTablaProducto").slideToggle( "slow" );
+        
+    });
+
+    jQuery("#"+producto.FRM_UPLOAD).change(function(e){
+        // Creamos el objeto de la clase FileReader
+        let reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        modsJS.img.ext = e.target.files[0].type.replace("image/","");
+        console.log(reader);
+        reader.onload = function(evt){
+            var fileData = evt.target.result;
+           var bytes = new Uint8Array(fileData);
+           var binaryText = '';
+            for (var index = 0; index < bytes.byteLength; index++) {
+                binaryText += String.fromCharCode( bytes[index] );
+            }
+            modsJS.img.text = binaryText;
+            modsJS.img.path = reader.result;
+        }
+        
+    });
+    
 });
 
 const productoJS ={};
 
 productoJS.validateModel=function(event){
     const result = util.validateForm(event.target.value, producto);
+    if(result.entity.upload!==""){
+        
+    }
     if(result.validate){
         if(result.entity.productoId==""){
          
@@ -28,9 +56,21 @@ productoJS.limpiar = function(){
 
 productoJS.save=async function(model){
     model.descontinuado=modsJS.frm_producto.$data.descontinuado;
+    model.producto_tallas = modsJS.frm_producto.producto_tallas;
     model.upload  = {};
     model.upload.ext  = modsJS.img.ext;
-    model.upload.path  = modsJS.img.path;
+    model.upload.path  =btoa(modsJS.img.path);
+    model.upload.path  =model.upload.path.replaceAll("=","");
+
+    //model.upload.path  =btoa(modsJS.img.path);
+    model.cantidad = modsJS.frm_producto.$data.cantidad;
+   // jQuery("#"+producto.FRM_GUARDAR_ID).html("Espere.. <i class='zmdi zmdi-rotate-right zmdi-hc-spin'></i>");
+    //jQuery("#"+producto.FRM_GUARDAR_ID).prop("disabled",true)
+    //const upload={};
+
+   /*  upload = modsJS.img.path;
+    upload = modsJS.img.ext; */
+    //const saveUplad = await utilXHTTP.post("productos/saveImg",JSON.stringify(upload));
     const result = await utilXHTTP.post("productos/save",JSON.stringify(model));
     if(result.successful){
         messageJS.showMessage("Procedimiento exitoso","Se ha  guardado el nuevo producto","success");
@@ -77,18 +117,29 @@ productoJS.updateStatus = async function(model){
 }
 
 productoJS.findById = async function(id){
-    const result = await utilXHTTP.get('productoes/findById/'+id);
+    const result = await utilXHTTP.get('productos/findById/'+id);
     if(result.successful){
+        result.producto.upload = "";
         util.updateFrom(modsJS[producto.FRM_NAME_ID], result.producto);
+        if(result.producto.tallas.length>0){
+            modsJS.frm_producto.producto_tallas=true;
+            modsJS.grid.show = true;
+            var tallas = result.producto.tallas;
+            for(var i =0;i<tallas.length;i++){
+                tallas[i].talla =  jQuery("#tallaId option[value='"+tallas[i].tallaId+"']").text()
+            }
+            modsJS.grid._data.gridData =[];
+            modsJS.grid._data.gridData =tallas;
+        }
     }
 };
 
 productoJS.findAll = async function(){
-    const result = await utilXHTTP.get('productoes/findAll');
+    const result = await utilXHTTP.get('productos/findAll');
     console.log(result);
     if(result.successful){
-        modsJS.grid._data.gridData =[];
-        modsJS.grid._data.gridData =result.productoes;
+        modsJS.gridProducto._data.gridData =[];
+        modsJS.gridProducto._data.gridData =result.productos;
     }
 };
 const proTallaJS ={};
@@ -136,6 +187,7 @@ modsJS.img ={};
 
 modsJS.ini =function(){
 
+
     modsJS.onChangeFile=function(e){
         // Creamos el objeto de la clase FileReader
         let reader = new FileReader();
@@ -156,10 +208,25 @@ modsJS.ini =function(){
         component:modsJS.getComponent()
     }); */
 
-   // productoJS.findAll();
+   productoJS.findAll();
+
+
+   modsJS.gridProducto = utilGrid.createGrid({
+    script:'#grid-producto',
+    grid:'producto-grid',
+    element:'#divProductos',
+    columns:[
+        {name:'Nombre', column:'nombre'},{name:'Descripcion', column:'descripcion'},{name:'Cantidad', column:'cantidad'},{name:'Precio', column:'precio'},{name:'', column:''}
+    ],
+    data:[],
+    show:false,
+    component:modsJS.getComponentProducto()
+});
+
 
    modsJS.grid = utilGrid.createGrid({
     script:'#grid-template',
+    grid:'demo-grid',
     element:'#demo',
     columns:[
         {name:'Talla', column:'talla'},{name:'Descripcion', column:'descripcion'},{name:'Cantidad', column:'cantidad'},{name:'', column:''}
@@ -228,7 +295,6 @@ modsJS[proTalla.MODAL_BOT] =util.createVueFrom({
 
 
 
-
 modsJS.getComponent = function(){
     utilGrid.methods.findById = productoJS.findById;
     utilGrid.methods.changeStatus =  productoJS.changeStatus;
@@ -243,15 +309,18 @@ modsJS.getComponent = function(){
         }
 };
 
-jQuery("#"+producto.FRM_UPLOAD).change(function(e){
-    // Creamos el objeto de la clase FileReader
-    let reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    modsJS.img.ext = e.target.files[0].type.replace("image/","");
-    console.log(reader);
-    reader.onload = function(){
-       
-        modsJS.img.path = reader.result;
-    }
-    
-});
+modsJS.getComponentProducto = function(){
+    utilGrid.methods.findById = productoJS.findById;
+    utilGrid.methods.changeStatus =  productoJS.changeStatus;
+        return {
+            template:'#grid-producto',
+              props:    utilGrid.propsDefault,
+              data: utilGrid.dataDefault,
+              component: utilGrid.component,
+              computed: utilGrid.computed,
+              filters: utilGrid.filters,
+              methods: utilGrid.methods
+        }
+};
+
+

@@ -8,7 +8,7 @@ const mysqlStore=    require('express-mysql-session');
 const bodyParser = require('body-parser');
 const {database,errorpage} =    require('./keys');
 const passport =    require('passport');
-
+const multer = require('multer');
 //Initizations
 const app =    express();
 require('./lib/passport');
@@ -31,11 +31,12 @@ app.use(session({
     saveUninitialized:false,
     store: new mysqlStore(database)
 }));
-
+ //Guardar la imagen en la carpeta de temp
+ app.use(multer({dest:path.join(__dirname,'../public/assets/temp')}).single('image'));
 app.use(flash());//Enviar mensajes
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(passport.initialize());
 app.use(passport.session());
 //Global Variables
