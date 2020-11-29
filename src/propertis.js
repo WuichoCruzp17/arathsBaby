@@ -88,6 +88,11 @@ const proTalla ={
     msg_name:'Nombre es requerido'
 };
 
+const pedido ={
+    FRM_NAME_ID:'frm_pedido',
+    FRM_FOLIO:'folio'
+}
+
 const mesages={
     msg_lon_M:'El ${text} no debe de superar ${number} caracteres',
     msg_lon_m:'El ${text} debe de cumplir por lo menos ${number} caracteres'

@@ -1,0 +1,89 @@
+   <link rel="stylesheet" href="../css/groupbox.css">
+   <link rel="stylesheet" href="../fontawesome-free-5.12.1-web/css/all.css">
+   <script src="../js/util.js"></script>
+   <script src="../arathsBaby/js/pedido.js"></script>
+
+<div class="container">
+  <div class="page-header">
+     <h1 class="all-tittles">Sistema de Iventario <small>Administración de Pedidos</small></h1>
+  </div>
+ </div>
+<div class="container-fluid">
+    <div class="row mtop-10" id="searchProduto"  >
+        <div class="col-sm-12" >
+            <fieldset class="well" id="divPedidos">
+              <legend class="well-legend text-uppercase" style="cursor: pointer;" id="contraerTabla">Lista Pedidos:</legend>
+              <div id="contenedorTablaProducto">
+
+                    <div class="col-lg-4">
+                        <div class="group-material">
+                        <form id="" style="margin-bottom:5px">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                     Buscar <input name="query" v-model="searchQuery" class="form-control">
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                 </div>
+
+               <pedido-grid :heroes="gridData" :columns="gridColumns" :filter-key="searchQuery">
+               </pedido-grid>
+
+              </div>
+                
+            </fieldset>
+        </div>
+    </div>
+</div>
+    <script type="text/x-template" id="grid-pedido">
+    <div class="container-fluid">
+          <table class="table">
+            <thead>
+              <tr>
+                <th v-for="key in columns"
+                  @click="sortBy(key)" 
+                  
+                  \:class="{ active: sortKey == key.column }">
+                  
+                  <template v-if="key.column !==''">
+                    \{{ key.name | capitalize }}
+                  <span class="arrow" :class="sortOrders[key.column] > 0 ? 'asc' : 'dsc'" >
+                  </span>
+                  </template>
+                 
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="entry in filteredHeroes">
+                <td>
+                    \{{entry['folio']}}
+                    </td>
+                <td>
+                    \{{entry['nombre']}}
+                </td>
+                <td>
+                    \{{entry['ciudad']}}
+                </td>
+                <td>
+                    \{{entry['direccion']}}<br>Numero #
+                    \{{entry['numExt']}}
+                    \{{entry['numInt']}}
+                </td>
+                <td>
+                    \{{entry['correo']}}
+                </td>
+                <td>
+                    \{{entry['costoEnvio']}}
+                </td>
+                <td>
+                    <button type='button' class="btn btn-default"  v-on:click='findById(entry["productoId"])' title="Ver detalle">
+                      <span class="fa fa-eye"></span>
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </script>
