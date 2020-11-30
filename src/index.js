@@ -2,7 +2,6 @@ const express =    require('express');
 const morgan =    require('morgan');
 const expresshbs =  require('express-handlebars');
 const path =    require('path');
-const flash=require('connect-flash');
 const session =    require('express-session');
 const mysqlStore=    require('express-mysql-session');
 const bodyParser = require('body-parser');
@@ -31,9 +30,8 @@ app.use(session({
     saveUninitialized:false,
     store: new mysqlStore(database)
 }));
- //Guardar la imagen en la carpeta de temp
- app.use(multer({dest:path.join(__dirname,'../public/assets/temp')}).single('image'));
-app.use(flash());//Enviar mensajes
+app.use(multer({dest:path.join(__dirname,'../public/assets/temp')}).single('image'));
+
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -41,8 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 //Global Variables
 app.use((req, res, next)=>{
-    app.locals.success = req.flash('success');
-    app.locals.message = req.flash('message');
+    
     app.locals.user    =req.user;
     next();
 });

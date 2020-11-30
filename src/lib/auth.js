@@ -16,14 +16,14 @@ module.exports = {
      validateAccesousUsuario(req, res, next){
          const url = (req.url !=="/") ? req.url :req.baseUrl;
         console.log(req.user);
-         if(req.user.hasOwnProperty('administradorId')){
+         if(req.user.hasOwnProperty('usuarioId')){
             const pages = req.user.paginas;
             for(var i=0; i<pages.length;i++){
                 if(pages[i].url === url){
                     return next();
                 }
             }
-            return res.redirect('/biblioteca/index');
+            return res.redirect('/arathsBaby/index');
          }
         
      }
