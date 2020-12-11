@@ -106,4 +106,13 @@ const global ={
     KEY_MOD:'Modificar',
     KEY_CLEAN:'Limpiar'
 };
+
+const clientes ={
+
+    FRM_ID:'clienteId',
+    FRM_NOM:'nombre',
+    FRM_EMAIL:'correo'
+
+};
+
 module.exports = {proveedor,mesages,global, categoria, producto, talla,proTalla};
